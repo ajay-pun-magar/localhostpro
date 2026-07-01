@@ -7,3 +7,4 @@ Localhostpro solves this exact problem by allowing you to edit you HTML page and
 
 # Development Journey
 **2026/7/1:** A basic fastAPI server and docker configuration.
+**2026/7/2:** Designed the index page.
