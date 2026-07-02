@@ -12,3 +12,15 @@ def read_index():
     # Build the path to your index.html file
     index_path = os.path.join(BASE_DIR, "index.html")
     return FileResponse(index_path)
+
+@app.get("/explore")
+def read_explore():
+    # Build the path to your explore.html file
+    explore_path = os.path.join(BASE_DIR, "explore.html")
+    return FileResponse(explore_path)
+
+@app.get("/create")
+def read_create():
+    # Build the path to your create.html file
+    create_path = os.path.join(BASE_DIR, "login.html")
+    return FileResponse(create_path)

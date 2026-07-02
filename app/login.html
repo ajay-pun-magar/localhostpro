@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticate</title>
+    <style>
+        /* Base Styling matching your original design */
+        body {
+            font-family: "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .auth-container {
+            width: 300px;
+            padding: 20px;
+            border: 2px solid #000;
+            background-color: #fff;
+            border-radius: 8px;
+            
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 2px solid #000;
+            border-radius: 8px;
+        }
+
+        button {
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 30px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background-color: #40f;
+            transition: background-color 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f5f5f5;
+            border-color: #40f;
+            color: #40f;
+        }
+
+        /* Used to hide the OTP section initially */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <form id="authForm" onsubmit="handleFormSubmit(event)">
+        
+        <!-- Phase 1: Email Input -->
+        <div id="emailSection" class="form-group">
+            <label for="email">Email Address</label>
+            <!-- type="email" and required triggers native browser validation -->
+            <input type="email" id="email" required placeholder="name@example.com">
+            <br><br>
+            <button type="button" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+        </div>
+
+        <!-- Phase 2: OTP Input (Hidden by default) -->
+        <div id="otpSection" class="form-group hidden">
+            <label for="otp">Enter OTP</label>
+            <input type="text" id="otp" placeholder="Enter verification code" pattern="[0-9]{6}">
+            <br><br>
+            <button type="submit" id="verifyOtpBtn">Verify OTP</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function sendOTP() {
+        const emailInput = document.getElementById('email');
+        const emailSection = document.getElementById('emailSection');
+        const otpSection = document.getElementById('otpSection');
+        const otpInput = document.getElementById('otp');
+
+        // Check frontend validity (HTML5 built-in email pattern validation)
+        if (!emailInput.checkValidity()) {
+            emailInput.reportValidity(); // Shows native tooltips like "Please enter an email address"
+            return;
+        }
+
+        // --- BACKEND API CALL GOES HERE ---
+        // This is where you will eventually use fetch() to hit your backend 
+        // framework (like Flask or FastAPI) to trigger your Python SMTP script.
+        console.log("Sending OTP to: " + emailInput.value);
+        // ----------------------------------
+
+        // Hide Email field and reveal OTP field
+        emailSection.classList.add('hidden');
+        otpSection.classList.remove('hidden');
+        
+        // Automatically place cursor in OTP box and make it a required field
+        otpInput.required = true;
+        otpInput.focus();
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Prevents the page from refreshing on form submit
+        
+        const otpValue = document.getElementById('otp').value;
+        
+        // --- BACKEND API CALL GOES HERE ---
+        // Send the email + OTP to your backend server to see if they match.
+        console.log("Verifying OTP: " + otpValue);
+        alert("Submitting verification code: " + otpValue);
+        // ----------------------------------
+    }
+</script>
+
+</body>
+</html>
